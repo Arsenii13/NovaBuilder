@@ -3,28 +3,27 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nova Star</title>
+<title>Nova Builder</title>
 
 <style>
 
-/* ===== ОСНОВА ===== */
 body{
 margin:0;
-font-family:'Segoe UI',sans-serif;
+font-family: 'Segoe UI', sans-serif;
 background:#0f172a;
 color:white;
 scroll-behavior:smooth;
 }
 
-/* ===== HEADER ===== */
+/* HEADER */
 header{
 position:fixed;
 width:100%;
 top:0;
 display:flex;
 justify-content:space-between;
-padding:15px 20px;
-background:rgba(2,6,23,0.85);
+padding:20px;
+background:rgba(2,6,23,0.8);
 backdrop-filter:blur(10px);
 z-index:1000;
 }
@@ -32,16 +31,16 @@ z-index:1000;
 .logo{
 color:#38bdf8;
 font-weight:bold;
+font-size:22px;
 }
 
 nav a{
 color:white;
-margin:0 8px;
+margin:0 10px;
 text-decoration:none;
-font-size:14px;
 }
 
-/* ===== HERO ===== */
+/* HERO */
 .hero{
 height:100vh;
 display:flex;
@@ -49,47 +48,51 @@ flex-direction:column;
 justify-content:center;
 align-items:center;
 text-align:center;
-padding:20px;
 background:linear-gradient(135deg,#0ea5e9,#6366f1);
+animation:gradientMove 8s infinite alternate;
+}
+
+@keyframes gradientMove{
+0%{background-position:left;}
+100%{background-position:right;}
 }
 
 .hero h1{
-font-size:40px;
+font-size:60px;
 margin:0;
-animation:fadeUp 1s;
+animation:fadeIn 2s;
 }
 
 .hero p{
-font-size:18px;
-animation:fadeUp 1.5s;
+font-size:22px;
+animation:fadeIn 3s;
+}
+
+@keyframes fadeIn{
+from{opacity:0; transform:translateY(20px);}
+to{opacity:1; transform:translateY(0);}
 }
 
 .btn{
 margin-top:20px;
-padding:12px 20px;
+padding:12px 25px;
 background:white;
 color:black;
 border-radius:10px;
-border:none;
 cursor:pointer;
-transition:0.3s;
 }
 
-.btn:hover{
-transform:scale(1.05);
-}
-
-/* ===== СЕКЦИИ ===== */
+/* SECTIONS */
 .section{
-padding:80px 20px;
-max-width:1000px;
+padding:100px 20px;
+max-width:1100px;
 margin:auto;
 }
 
-.services{
+.services, .pricing{
 display:grid;
-grid-template-columns:1fr;
-gap:15px;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:20px;
 }
 
 .card{
@@ -100,61 +103,22 @@ transition:0.3s;
 }
 
 .card:hover{
-transform:translateY(-5px);
+transform:translateY(-10px) scale(1.03);
 }
 
-/* ===== ФОРМА ===== */
+/* FORM */
 input, textarea{
 width:100%;
 padding:12px;
-margin:8px 0;
+margin:10px 0;
 border-radius:8px;
 border:none;
 }
 
-/* ===== SUCCESS MESSAGE ===== */
-#success{
-position:fixed;
-top:20px;
-left:50%;
-transform:translateX(-50%);
-background:#22c55e;
-padding:15px 25px;
-border-radius:10px;
-display:none;
-animation:fadeDown 0.5s;
-}
-
-/* ===== АНИМАЦИИ ===== */
-@keyframes fadeUp{
-from{opacity:0; transform:translateY(20px);}
-to{opacity:1; transform:translateY(0);}
-}
-
-@keyframes fadeDown{
-from{opacity:0; transform:translate(-50%,-20px);}
-to{opacity:1; transform:translate(-50%,0);}
-}
-
-/* ===== RESPONSIVE ===== */
-@media(min-width:700px){
-.services{
-grid-template-columns:repeat(2,1fr);
-}
-
-.hero h1{
-font-size:60px;
-}
-
-.hero p{
-font-size:22px;
-}
-}
-
-@media(min-width:1000px){
-.services{
-grid-template-columns:repeat(4,1fr);
-}
+footer{
+text-align:center;
+padding:30px;
+background:#020617;
 }
 
 </style>
@@ -162,36 +126,64 @@ grid-template-columns:repeat(4,1fr);
 
 <body>
 
-<div id="success">✅ Поръчката е изпратена!</div>
-
 <header>
-<div class="logo">Nova Star</div>
+<div class="logo">Nova Webapp Builder</div>
 <nav>
+<a href="#about">За нас</a>
 <a href="#services">Услуги</a>
+<a href="#pricing">Цени</a>
 <a href="#contact">Поръчка</a>
 </nav>
 </header>
 
 <section class="hero">
 <h1>Nova Star</h1>
-<p>Модерни сайтове и приложения</p>
-<a href="#contact" class="btn">Започни</a>
+<p>Създаваме бъдещето на уеба</p>
+<a href="#contact" class="btn">Започни проект</a>
+</section>
+
+<section id="about" class="section">
+<h2>За нас</h2>
+<p>Nova Star е компания за разработка на уебсайтове и приложения. Ние създаваме модерни, бързи и красиви решения за бизнеси и проекти.</p>
 </section>
 
 <section id="services" class="section">
 <h2>Услуги</h2>
 <div class="services">
 <div class="card">🌐 Уебсайтове</div>
-<div class="card">📱 Приложения</div>
+<div class="card">📱 Уеб приложения</div>
 <div class="card">🎮 Игри</div>
 <div class="card">⚙️ Поддръжка</div>
+</div>
+</section>
+
+<section id="pricing" class="section">
+<h2>Цени</h2>
+<div class="pricing">
+<div class="card">
+<h3>Basic</h3>
+<p>100 лв</p>
+<p>Прост сайт</p>
+</div>
+
+<div class="card">
+<h3>Pro</h3>
+<p>300 лв</p>
+<p>Модерен сайт + дизайн</p>
+</div>
+
+<div class="card">
+<h3>Ultra</h3>
+<p>600+ лв</p>
+<p>Приложение или сложен проект</p>
+</div>
 </div>
 </section>
 
 <section id="contact" class="section">
 <h2>Поръчка</h2>
 
-<form id="form">
+<form action="order.php" method="POST">
 <input type="text" name="name" placeholder="Име" required>
 <input type="email" name="email" placeholder="Email" required>
 <textarea name="message" placeholder="Какво искате?"></textarea>
@@ -200,44 +192,9 @@ grid-template-columns:repeat(4,1fr);
 
 </section>
 
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-import { getFirestore, addDoc, collection } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-
-const firebaseConfig = {
-  apiKey: "ТУК",
-  authDomain: "ТУК",
-  projectId: "ТУК",
-};
-
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-
-const form = document.getElementById("form");
-const success = document.getElementById("success");
-
-form.addEventListener("submit", async (e)=>{
-e.preventDefault();
-
-const data = new FormData(form);
-
-await addDoc(collection(db, "orders"), {
-name: data.get("name"),
-email: data.get("email"),
-message: data.get("message"),
-time: new Date()
-});
-
-// показване на съобщение
-success.style.display = "block";
-
-setTimeout(()=>{
-success.style.display = "none";
-},3000);
-
-form.reset();
-});
-</script>
+<footer>
+<p>© 2026 Nova Webapp Builder</p>
+</footer>
 
 </body>
 </html>
