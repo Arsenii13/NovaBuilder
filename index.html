@@ -1,200 +1,793 @@
 <!DOCTYPE html>
-<html lang="bg">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nova Builder</title>
+<title>Nova WebApp Builder</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
 
 <style>
-
-body{
-margin:0;
-font-family: 'Segoe UI', sans-serif;
-background:#0f172a;
-color:white;
-scroll-behavior:smooth;
+/* ===== GLOBAL ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-/* HEADER */
-header{
-position:fixed;
-width:100%;
-top:0;
-display:flex;
-justify-content:space-between;
-padding:20px;
-background:rgba(2,6,23,0.8);
-backdrop-filter:blur(10px);
-z-index:1000;
+body {
+    font-family: 'Inter', sans-serif;
+    background: radial-gradient(circle at top, #0f0f1a, #050507);
+    color: white;
+    overflow-x: hidden;
 }
 
-.logo{
-color:#38bdf8;
-font-weight:bold;
-font-size:22px;
+/* ===== ANIMATED BACKGROUND GLOW ===== */
+body::before {
+    content: "";
+    position: fixed;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(106,92,255,0.4), transparent 70%);
+    top: -200px;
+    left: -200px;
+    z-index: -1;
+    animation: floatGlow 10s infinite alternate;
 }
 
-nav a{
-color:white;
-margin:0 10px;
-text-decoration:none;
+@keyframes floatGlow {
+    0% { transform: translate(0,0); }
+    100% { transform: translate(200px,150px); }
 }
 
-/* HERO */
-.hero{
-height:100vh;
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
-text-align:center;
-background:linear-gradient(135deg,#0ea5e9,#6366f1);
-animation:gradientMove 8s infinite alternate;
+/* ===== NAV ===== */
+nav {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 60px;
+    position: sticky;
+    top: 0;
+    backdrop-filter: blur(20px);
+    background: rgba(15,15,25,0.6);
+    border-bottom: 1px solid rgba(255,255,255,0.05);
 }
 
-@keyframes gradientMove{
-0%{background-position:left;}
-100%{background-position:right;}
+.logo {
+    font-size: 24px;
+    font-weight: 800;
+    background: linear-gradient(90deg, #6a5cff, #00d4ff, #6a5cff);
+    background-size: 200%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradientMove 4s linear infinite;
 }
 
-.hero h1{
-font-size:60px;
-margin:0;
-animation:fadeIn 2s;
+@keyframes gradientMove {
+    0% { background-position: 0% }
+    100% { background-position: 200% }
 }
 
-.hero p{
-font-size:22px;
-animation:fadeIn 3s;
+/* ===== HERO ===== */
+.hero {
+    height: 95vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    text-align: center;
+    padding: 0 20px;
 }
 
-@keyframes fadeIn{
-from{opacity:0; transform:translateY(20px);}
-to{opacity:1; transform:translateY(0);}
+.hero h1 {
+    font-size: 70px;
+    font-weight: 800;
+    line-height: 1.1;
+    background: linear-gradient(90deg, #6a5cff, #00d4ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
-.btn{
-margin-top:20px;
-padding:12px 25px;
-background:white;
-color:black;
-border-radius:10px;
-cursor:pointer;
+.hero p {
+    font-size: 20px;
+    color: #aaa;
+    max-width: 600px;
 }
 
-/* SECTIONS */
-.section{
-padding:100px 20px;
-max-width:1100px;
-margin:auto;
+/* ===== BUTTON ===== */
+.btn {
+    margin-top: 25px;
+    padding: 14px 32px;
+    border-radius: 50px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    color: white;
+    background: linear-gradient(90deg, #6a5cff, #00d4ff);
+    position: relative;
+    overflow: hidden;
+    transition: 0.3s;
 }
 
-.services, .pricing{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-gap:20px;
+.btn::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, #00d4ff, #6a5cff);
+    opacity: 0;
+    transition: 0.3s;
 }
 
-.card{
-background:#1e293b;
-padding:20px;
-border-radius:12px;
-transition:0.3s;
+.btn:hover::before {
+    opacity: 1;
 }
 
-.card:hover{
-transform:translateY(-10px) scale(1.03);
+.btn:hover {
+    transform: scale(1.08);
+    box-shadow: 0 0 25px rgba(106,92,255,0.6);
 }
 
-/* FORM */
-input, textarea{
-width:100%;
-padding:12px;
-margin:10px 0;
-border-radius:8px;
-border:none;
+/* ===== SECTIONS ===== */
+.section {
+    padding: 100px 60px;
+    text-align: center;
 }
 
-footer{
-text-align:center;
-padding:30px;
-background:#020617;
+.section h2 {
+    font-size: 40px;
+    margin-bottom: 50px;
 }
 
+/* ===== CARDS (GLASS EFFECT) ===== */
+.features {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 25px;
+}
+
+.card {
+    width: 300px;
+    padding: 35px;
+    border-radius: 20px;
+    background: rgba(255,255,255,0.03);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255,255,255,0.08);
+    transition: 0.4s;
+    position: relative;
+}
+
+.card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 20px;
+    background: linear-gradient(120deg, transparent, rgba(106,92,255,0.2), transparent);
+    opacity: 0;
+    transition: 0.4s;
+}
+
+.card:hover::before {
+    opacity: 1;
+}
+
+.card:hover {
+    transform: translateY(-12px) scale(1.02);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+}
+
+/* ===== FORM ===== */
+form {
+    max-width: 520px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+input, textarea, select {
+    padding: 16px;
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.08);
+    background: rgba(255,255,255,0.02);
+    color: white;
+    transition: 0.3s;
+}
+
+input:focus, textarea:focus, select:focus {
+    outline: none;
+    border: 1px solid #6a5cff;
+    box-shadow: 0 0 10px rgba(106,92,255,0.5);
+}
+
+/* ===== FOOTER ===== */
+footer {
+    padding: 40px;
+    text-align: center;
+    color: #777;
+}
+
+/* ===== SCROLL ANIMATIONS ===== */
+.fade-in {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: all 1s ease;
+}
+
+.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width: 768px) {
+    .hero h1 {
+        font-size: 40px;
+    }
+
+    .section {
+        padding: 60px 20px;
+    }
+}
+    /* ===== PARTICLES CANVAS ===== */
+#particles {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: -2;
+}
+
+/* ===== MOUSE GLOW ===== */
+#mouseGlow {
+    position: fixed;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(0,212,255,0.25), transparent 70%);
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    z-index: -1;
+    transition: transform 0.05s linear;
+}
+
+/* ===== PARALLAX DEPTH ===== */
+.hero {
+    transform-style: preserve-3d;
+}
+
+.hero h1 {
+    transform: translateZ(50px);
+}
+
+.hero p {
+    transform: translateZ(30px);
+}
+
+/* ===== 3D CARD ===== */
+.card {
+    transform-style: preserve-3d;
+    perspective: 1000px;
+}
+    .lang-switcher {
+    display: flex;
+    gap: 10px;
+}
+
+.lang-switcher button {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.lang-switcher button:hover {
+    background: #6a5cff;
+}
+    .s{
+        float:left;
+        width:5px;
+    }
+    nav {
+    position: fixed; /* always on top */
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 9999; /* VERY IMPORTANT */
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 15px 40px;
+
+    background: rgba(10, 10, 20, 0.6);
+    backdrop-filter: blur(15px);
+
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+/* prevent content from going under navbar */
+body {
+    padding-top: 80px;
+}
+    #webgl {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    z-index: -10; /* always behind EVERYTHING */
+}
+
+#particles {
+    z-index: -9;
+}
+
+#mouseGlow {
+    z-index: -8;
+}
+    nav {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* wrap container */
+.nav-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+    nav {
+    border-radius: 0 0 20px 20px;
+}
+
+nav:hover {
+    background: rgba(20,20,40,0.8);
+}
+    /* ===== NAV BASE ===== */
+#navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 9999;
+
+    transition: all 0.3s ease;
+}
+
+/* SHRINK + BLUR ON SCROLL */
+#navbar.scrolled {
+    background: rgba(10,10,20,0.8);
+    backdrop-filter: blur(20px);
+    padding: 10px 40px;
+}
+
+/* DEFAULT */
+.nav-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 40px;
+}
+
+/* NAV LINKS */
+.nav-links {
+    display: flex;
+    gap: 10px;
+}
+
+/* ===== HAMBURGER ===== */
+.hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+}
+
+.hamburger span {
+    width: 25px;
+    height: 3px;
+    background: white;
+    transition: 0.3s;
+}
+
+/* ===== MOBILE MENU ===== */
+@media(max-width: 768px) {
+    .nav-links {
+        position: absolute;
+        top: 70px;
+        right: 20px;
+
+        flex-direction: column;
+        background: rgba(20,20,40,0.95);
+        padding: 20px;
+        border-radius: 15px;
+
+        opacity: 0;
+        transform: translateY(-20px);
+        pointer-events: none;
+        transition: 0.3s;
+    }
+
+    .nav-links.active {
+        opacity: 1;
+        transform: translateY(0);
+        pointer-events: auto;
+    }
+
+    .hamburger {
+        display: flex;
+    }
+}
+        .hamburger.active span:nth-child(1) {
+    transform: rotate(45deg) translateY(8px);
+}
+.hamburger.active span:nth-child(2) {
+    opacity: 0;
+}
+.hamburger.active span:nth-child(3) {
+    transform: rotate(-45deg) translateY(-8px);
+}
 </style>
 </head>
 
 <body>
+    <div id="webgl"></div>
+<div id="particles"></div>
+<div id="mouseGlow"></div>
+<nav id="navbar">
+  <div class="nav-inner">
 
-<header>
-<div class="logo">Nova Webapp Builder</div>
-<nav>
-<a href="#about">За нас</a>
-<a href="#services">Услуги</a>
-<a href="#pricing">Цени</a>
-<a href="#contact">Поръчка</a>
+    <div class="logo">Nova</div>
+
+    <div class="nav-links" id="navLinks">
+        <button class="btn" onclick="setLang('en')">EN</button>
+        <button class="btn" onclick="setLang('bg')">BG</button>
+        <button class="btn" onclick="setLang('ua')">UA</button>
+    </div>
+
+    <div class="hamburger" id="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
+  </div>
 </nav>
-</header>
 
 <section class="hero">
-<h1>Nova Star</h1>
-<p>Създаваме бъдещето на уеба</p>
-<a href="#contact" class="btn">Започни проект</a>
+    <h1 data-key="hero_title">Build Your Dream WebApp</h1>
+    <p data-key="hero_desc">Fast. Modern. Scalable. Powered by Nova WebApp Builder.</p>
+    <button class="btn" onclick="scrollToForm()" data-key="hero_btn">Start Your Project</button>
 </section>
 
-<section id="about" class="section">
-<h2>За нас</h2>
-<p>Nova Star е компания за разработка на уебсайтове и приложения. Ние създаваме модерни, бързи и красиви решения за бизнеси и проекти.</p>
+<section class="section fade-in">
+    <h2 data-key="offer_title">What We Offer</h2>
+    <div class="features">
+        <div class="card">
+            <h3 data-key="offer1_title">Custom Websites</h3>
+            <p data-key="offer1_desc">Fully tailored websites built to match your vision.</p>
+        </div>
+        <div class="card">
+            <h3 data-key="offer2_title">Web Applications</h3>
+            <p data-key="offer2_desc">Powerful apps with modern tech and performance.</p>
+        </div>
+        <div class="card">
+            <h3 data-key="offer3_title">UI/UX Design</h3>
+            <p data-key="offer3_desc">Clean, futuristic designs that convert users.</p>
+        </div>
+    </div>
 </section>
 
-<section id="services" class="section">
-<h2>Услуги</h2>
-<div class="services">
-<div class="card">🌐 Уебсайтове</div>
-<div class="card">📱 Уеб приложения</div>
-<div class="card">🎮 Игри</div>
-<div class="card">⚙️ Поддръжка</div>
-</div>
+<section class="section">
+    <h2 data-key="story1_title">We don’t just build websites.<br>We create digital experiences.</h2>
+    <p data-key="story1_desc">Nova transforms ideas into powerful, scalable web applications.</p>
 </section>
 
-<section id="pricing" class="section">
-<h2>Цени</h2>
-<div class="pricing">
-<div class="card">
-<h3>Basic</h3>
-<p>100 лв</p>
-<p>Прост сайт</p>
-</div>
-
-<div class="card">
-<h3>Pro</h3>
-<p>300 лв</p>
-<p>Модерен сайт + дизайн</p>
-</div>
-
-<div class="card">
-<h3>Ultra</h3>
-<p>600+ лв</p>
-<p>Приложение или сложен проект</p>
-</div>
-</div>
+<section class="section">
+    <h2 data-key="story2_title">Speed. Design. Performance.</h2>
+    <p data-key="story2_desc">Everything engineered for growth and conversion.</p>
 </section>
 
-<section id="contact" class="section">
-<h2>Поръчка</h2>
-
-<form action="order.php" method="POST">
-<input type="text" name="name" placeholder="Име" required>
-<input type="email" name="email" placeholder="Email" required>
-<textarea name="message" placeholder="Какво искате?"></textarea>
-<button class="btn">Изпрати</button>
-</form>
-
+<section class="section">
+    <h2 data-key="story3_title">Your vision, built to scale.</h2>
+    <p data-key="story3_desc">From idea to launch — we handle everything.</p>
 </section>
 
-<footer>
-<p>© 2026 Nova Webapp Builder</p>
+<section class="section fade-in">
+    <h2 data-key="why_title">Why Choose Nova?</h2>
+    <div class="features">
+        <div class="card">
+            <h3 data-key="why1">⚡ Fast Delivery</h3>
+        </div>
+        <div class="card">
+            <h3 data-key="why2">💎 Premium Quality</h3>
+        </div>
+        <div class="card">
+            <h3 data-key="why3">🚀 Scalable Solutions</h3>
+        </div>
+    </div>
+</section>
+
+<section id="formSection" class="section fade-in">
+    <h2 data-key="form_title">Start Your Project</h2>
+    <form id="orderForm">
+        <input type="text" placeholder="Your Name" data-key-placeholder="name" required>
+        <input type="email" placeholder="Your Email" data-key-placeholder="email" required>
+
+        <select required>
+            <option value="" data-key="select_service">Select Service</option>
+            <option data-key="service1">Website</option>
+            <option data-key="service2">Web App</option>
+            <option data-key="service3">Full Package</option>
+        </select>
+
+        <textarea placeholder="Describe your project..." data-key-placeholder="desc" rows="5"></textarea>
+
+        <button class="btn" type="submit" data-key="submit">Submit Request</button>
+    </form>
+</section>
+
+<footer data-key="footer">
+    © 2026 Nova WebApp Builder
 </footer>
 
-</body>
-</html>
+<script>
+function scrollToForm() {
+    document.getElementById("formSection").scrollIntoView({ behavior: "smooth" });
+}
+
+/* FORM SUBMIT */
+document.getElementById("orderForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+    alert("🔥 Your request has been sent! We'll contact you soon.");
+});
+
+/* SCROLL ANIMATION */
+const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add("show");
+        }
+    });
+});
+
+document.querySelectorAll(".fade-in").forEach(el => observer.observe(el));
+</script>
+    <script id="insane-js">
+/* ================= PARTICLES ================= */
+const canvas = document.createElement("canvas");
+const ctx = canvas.getContext("2d");
+document.getElementById("particles").appendChild(canvas);
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let particles = [];
+
+for (let i = 0; i < 80; i++) {
+    particles.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        size: Math.random() * 2,
+        speedX: Math.random() * 0.5 - 0.25,
+        speedY: Math.random() * 0.5 - 0.25
+    });
+}
+
+function animateParticles() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    particles.forEach(p => {
+        p.x += p.speedX;
+        p.y += p.speedY;
+
+        if (p.x < 0 || p.x > canvas.width) p.speedX *= -1;
+        if (p.y < 0 || p.y > canvas.height) p.speedY *= -1;
+
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fillStyle = "#6a5cff";
+        ctx.fill();
+    });
+
+    requestAnimationFrame(animateParticles);
+}
+
+animateParticles();
+
+/* ================= MOUSE GLOW ================= */
+const glow = document.getElementById("mouseGlow");
+
+document.addEventListener("mousemove", e => {
+    glow.style.left = e.clientX + "px";
+    glow.style.top = e.clientY + "px";
+});
+
+/* ================= PARALLAX ================= */
+document.addEventListener("scroll", () => {
+    const scrollY = window.scrollY;
+
+    document.querySelectorAll(".hero h1").forEach(el => {
+        el.style.transform = `translateY(${scrollY * 0.2}px)`;
+    });
+
+    document.querySelectorAll(".hero p").forEach(el => {
+        el.style.transform = `translateY(${scrollY * 0.1}px)`;
+    });
+});
+
+/* ================= 3D CARD TILT ================= */
+document.querySelectorAll(".card").forEach(card => {
+    card.addEventListener("mousemove", e => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+
+        const rotateX = -(y - centerY) / 10;
+        const rotateY = (x - centerX) / 10;
+
+        card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.05)`;
+    });
+
+    card.addEventListener("mouseleave", () => {
+        card.style.transform = "rotateX(0) rotateY(0) scale(1)";
+    });
+});
+
+/* ================= SCROLL REVEAL ================= */
+const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.style.opacity = 1;
+            entry.target.style.transform = "translateY(0) scale(1)";
+        }
+    });
+}, { threshold: 0.2 });
+
+document.querySelectorAll(".section").forEach(section => {
+    section.style.opacity = 0;
+    section.style.transform = "translateY(100px) scale(0.95)";
+    observer.observe(section);
+});
+
+/* ================= RESIZE FIX ================= */
+window.addEventListener("resize", () => {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+});
+    
+</script>
+    <script>
+const translations = {
+    en: {
+        hero_title: "Build Your Dream WebApp",
+        hero_desc: "Fast. Modern. Scalable. Powered by Nova WebApp Builder.",
+        hero_btn: "Start Your Project",
+
+        offer_title: "What We Offer",
+        offer1_title: "Custom Websites",
+        offer1_desc: "Fully tailored websites built to match your vision.",
+        offer2_title: "Web Applications",
+        offer2_desc: "Powerful apps with modern tech and performance.",
+        offer3_title: "UI/UX Design",
+        offer3_desc: "Clean, futuristic designs that convert users.",
+
+        story1_title: "We don’t just build websites.<br>We create digital experiences.",
+        story1_desc: "Nova transforms ideas into powerful, scalable web applications.",
+        story2_title: "Speed. Design. Performance.",
+        story2_desc: "Everything engineered for growth and conversion.",
+        story3_title: "Your vision, built to scale.",
+        story3_desc: "From idea to launch — we handle everything.",
+
+        why_title: "Why Choose Nova?",
+        why1: "⚡ Fast Delivery",
+        why2: "💎 Premium Quality",
+        why3: "🚀 Scalable Solutions",
+
+        form_title: "Start Your Project",
+        name: "Your Name",
+        email: "Your Email",
+        select_service: "Select Service",
+        service1: "Website",
+        service2: "Web App",
+        service3: "Full Package",
+        desc: "Describe your project...",
+        submit: "Submit Request",
+
+        footer: "© 2026 Nova WebApp Builder"
+    },
+
+    bg: {
+        hero_title: "Създай своя уеб приложение мечта",
+        hero_desc: "Бързо. Модерно. Скalable. Създадено от Nova WebApp Builder.",
+        hero_btn: "Започни проекта",
+
+        offer_title: "Какво предлагаме",
+        offer1_title: "Персонализирани сайтове",
+        offer1_desc: "Изцяло съобразени с вашата визия.",
+        offer2_title: "Уеб приложения",
+        offer2_desc: "Мощни приложения с модерни технологии.",
+        offer3_title: "UI/UX дизайн",
+        offer3_desc: "Модерен дизайн, който привлича клиенти.",
+
+        story1_title: "Ние не просто създаваме сайтове.<br>Създаваме дигитални изживявания.",
+        story1_desc: "Nova превръща идеи в мощни уеб приложения.",
+        story2_title: "Скорост. Дизайн. Производителност.",
+        story2_desc: "Създадено за растеж и конверсии.",
+        story3_title: "Вашата визия, мащабирана.",
+        story3_desc: "От идея до реалност — ние правим всичко.",
+
+        why_title: "Защо Nova?",
+        why1: "⚡ Бърза доставка",
+        why2: "💎 Високо качество",
+        why3: "🚀 Мащабируеми решения",
+
+        form_title: "Започни проекта си",
+        name: "Вашето име",
+        email: "Вашият имейл",
+        select_service: "Избери услуга",
+        service1: "Сайт",
+        service2: "Уеб приложение",
+        service3: "Пълен пакет",
+        desc: "Опишете проекта...",
+        submit: "Изпрати заявка",
+
+        footer: "© 2026 Nova WebApp Builder"
+    },
+
+    ua: {
+        hero_title: "Створи свій веб-додаток мрії",
+        hero_desc: "Швидко. Сучасно. Масштабовано. Від Nova WebApp Builder.",
+        hero_btn: "Розпочати проєкт",
+
+        offer_title: "Що ми пропонуємо",
+        offer1_title: "Індивідуальні сайти",
+        offer1_desc: "Повністю адаптовані під вашу ідею.",
+        offer2_title: "Веб-додатки",
+        offer2_desc: "Потужні рішення з сучасними технологіями.",
+        offer3_title: "UI/UX дизайн",
+        offer3_desc: "Сучасний дизайн, що конвертує.",
+
+        story1_title: "Ми не просто створюємо сайти.<br>Ми створюємо цифровий досвід.",
+        story1_desc: "Nova перетворює ідеї в масштабовані рішення.",
+        story2_title: "Швидкість. Дизайн. Продуктивність.",
+        story2_desc: "Створено для росту та конверсій.",
+        story3_title: "Ваше бачення — масштабоване.",
+        story3_desc: "Від ідеї до запуску — ми робимо все.",
+
+        why_title: "Чому Nova?",
+        why1: "⚡ Швидка доставка",
+        why2: "💎 Преміум якість",
+        why3: "🚀 Масштабовані рішення",
+
+        form_title: "Розпочати проєкт",
+        name: "Ваше ім'я",
+        email: "Ваш email",
+        select_service: "Оберіть послугу",
+        service1: "Сайт",
+        service2: "Веб-додаток",
+        service3: "Повний пакет",
+        desc: "Опишіть ваш проєкт...",
+        submit: "Надіслати",
+
+        footer: "© 2026 Nova WebApp Builder"
+    }
+};
+
+/* APPLY TRANSLATION */
+function setLang(lang) {
+    document.querySelectorAll("[data-key]").forEach(el => {
+        el.innerHTML = translations[lang][el.dataset.key];
+    });
+
+    document.querySelectorAll("[data-key-placeholder]").forEach(el => {
+        el.placeholder = translations[lang][el.dataset.keyPlaceholder];
+    });
+}
