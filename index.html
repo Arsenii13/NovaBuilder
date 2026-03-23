@@ -807,7 +807,7 @@ hamburger.addEventListener("click", () => {
 /* CLOSE ON CLICK */
 document.querySelectorAll(".nav-links button").forEach(btn => {
     btn.addEventListener("click", () => {
-        navLinks.classList.remove("active");
+       hamburger.classList.toggle("active"); navLinks.classList.remove("active");
     });
     hamburger.classList.toggle("active");
 });
