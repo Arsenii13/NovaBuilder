@@ -791,3 +791,37 @@ function setLang(lang) {
         el.placeholder = translations[lang][el.dataset.keyPlaceholder];
     });
 }
+setLang("en");
+</script>
+    <script>
+const hamburger = document.getElementById("hamburger");
+const navLinks = document.getElementById("navLinks");
+const navbar = document.getElementById("navbar");
+
+/* TOGGLE MENU */
+hamburger.addEventListener("click", () => {
+    navLinks.classList.toggle("active");
+    hamburger.classList.toggle("active");
+});
+
+/* CLOSE ON CLICK */
+document.querySelectorAll(".nav-links button").forEach(btn => {
+    btn.addEventListener("click", () => {
+        navLinks.classList.remove("active");
+    });
+    hamburger.classList.toggle("active");
+});
+
+/* SCROLL EFFECT */
+window.addEventListener("scroll", () => {
+    if (window.scrollY > 50) {
+        navbar.classList.add("scrolled");
+    } else {
+        navbar.classList.remove("scrolled");
+    }
+});
+
+</script>
+
+</body>
+</html>
